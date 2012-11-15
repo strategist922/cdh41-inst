@@ -1,0 +1,104 @@
+# Options for Zsh
+export HISTFILE=~/.zsh_history
+export HISTSIZE=50000
+export SAVEHIST=50000
+eval `dircolors -b`
+
+bindkey    "^[[3~"          delete-char
+bindkey    "^[3;5~"         delete-char
+
+autoload -U compinit promptinit
+compinit
+promptinit
+# looks of the shell
+PROMPT="[$(print '%{\e[0;31m%}%M%{\e[0m%}')]$(print '%{\e[0;31m%}$%{\e[0m%}') "
+RPROMPT="[$(print '%{\e[0;31m%}%~%{\e[0m%}')]"
+setopt auto_cd
+setopt correct
+setopt HIST_REDUCE_BLANKS
+setopt no_beep
+
+#keys
+bindkey "\e[1~" beginning-of-line
+bindkey "\e[4~" end-of-line
+bindkey "\e[5~" beginning-of-history
+bindkey "\e[6~" end-of-history
+bindkey "\e[3~" delete-char
+bindkey "\e[2~" quoted-insert
+bindkey "\e[5C" forward-word
+bindkey "\eOc" emacs-forward-word
+bindkey "\e[5D" backward-word
+bindkey "\eOd" emacs-backward-word
+bindkey "\e\e[C" forward-word
+bindkey "\e\e[D" backward-word
+# for rxvt
+# bindkey "\e[8~" end-of-line
+# bindkey "\e[7~" beginning-of-line
+# # for non RH/Debian xterm, can't hurt for RH/Debian xterm
+# bindkey "\eOH" beginning-of-line
+# bindkey "\eOF" end-of-line
+# # for freebsd console
+# bindkey "\e[H" beginning-of-line
+# bindkey "\e[F" end-of-line
+
+# Vars used by Zsh
+export EDITOR=vim
+export BROWSER=w3m
+export JAVA_HOME=/usr/lib/jvm/java-6-sun
+
+##################################################################
+# Completion
+
+# allow approximate
+zstyle ':completion:*' completer _complete _match _approximate
+zstyle ':completion:*:match:*' original only
+zstyle ':completion:*:approximate:*' max-errors 1 numeric
+
+# tab completion for PID :D
+zstyle ':completion:*:*:kill:*' menu yes select
+zstyle ':completion:*:kill:*' force-list always
+
+# cd not select parent dir
+zstyle ':completion:*:cd:*' ignore-parents parent pwd
+
+##################################################################
+# My aliases
+
+# Set up auto extension stuff
+alias -s html=$BROWSER
+alias -s org=$BROWSER
+alias -s php=$BROWSER
+alias -s com=$BROWSER
+alias -s net=$BROWSER
+alias -s png=feh
+alias -s jpg=feh
+alias -s gif=feg
+alias -s sxw=soffice
+alias -s doc=soffice
+alias -s gz=tar -xzvf
+alias -s bz2=tar -xjvf
+alias -s java=$EDITOR
+alias -s txt=$EDITOR
+alias -s PKGBUILD=$EDITOR
+
+# Normal aliases
+alias ls='ls --color=auto -F'
+alias lsd='ls -ld *(-/DN)'
+alias lsa='ls -ld .*'
+alias f='find |grep'
+alias c="clear"
+alias dir='ls -1'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias mv='mv -v'
+alias rm='rm -Iv'
+alias cp='cp -v'
+alias home='cd ~'
+alias vi='vim'
+alias grep='grep --color=auto'
+alias wget='wget --timeout 10'
+alias ping='ping -c 3'
+alias hist="grep '$1' ~/.zsh_history"
+alias start-hive="nohup hive --service hwi > /dev/null 2> /dev/null &"
